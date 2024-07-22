@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h2>{{ title }}</h2>
+    <p>{{ sort }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th><a href="/sort/{{title}}?sort=card&order={{ order }}">Card</a></th>
+                <th><a href="/sort/{{title}}?sort=numbern&order={{ order }} ">Number</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in cards %}
+            <tr>
+                <td>{{ card[0] }}</td>
+                <td>{{ card[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

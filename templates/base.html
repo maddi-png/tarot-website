@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tarot</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Cards</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/cards/Trump">Card Directory</a>
+            </li>
+            <li>
+                <a href="/cards/Swords">Your Fortune</a>
+            </li>
+        </ul>
+        <form method="POST" action="/search">
+            <input type="text" name="search" id="search">
+            <input type="submit" value="Search">
+        </form>
+    </nav>
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; M Homewood 2024</p>
+    </footer>
+</body>
+</html>
