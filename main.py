@@ -24,7 +24,7 @@ def render_home():
 
 @app.route('/cards/<suit>')
 def render_webpage(suit):
-    title = suit.upper()
+    title = suit.title()
     query = "SELECT name, number FROM cards WHERE suit=?"
     con = create_connection(DATABASE)
     cur = con.cursor()
