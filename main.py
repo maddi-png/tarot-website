@@ -22,10 +22,10 @@ def create_connection(db_file):
 def render_home():
     return render_template("index.html", types=get_types())
 
-@app.route('/cards/<suit>')
-def render_webpage(suit):
-    title = suit.title()
-    query = "SELECT name, number FROM cards WHERE suit=?"
+@app.route('/cards/<arcana>')
+def render_webpage(arcana):
+    title = arcana.title()
+    query = "SELECT name, number FROM cards WHERE arcana=?"
     con = create_connection(DATABASE)
     cur = con.cursor()
 
@@ -37,9 +37,9 @@ def render_webpage(suit):
     return render_template('cards.html', cards=card_list, title=title)
 
 
-def get_cards(suit):
-    title = suit.upper()
-    query = "SELECT name, number FROM cards WHERE suit=?"
+def get_cards(arcana):
+    title = arcana.upper()
+    query = "SELECT name, number FROM cards WHERE arcana=?"
     con = create_connection(DATABASE)
     cur = con.cursor()
 
