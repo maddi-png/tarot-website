@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 import sqlite3
 from sqlite3 import Error
 
-
 app = Flask(__name__)
 DATABASE = "tarot.db"
 
@@ -45,22 +44,37 @@ def get_cards(arcana):
 
     # query db
     cur.execute(query, (title,))
-    tag_list = cur.fetchall()
+    card_list = cur.fetchall()
     con.close()
-    print(tag_list)
-    return tag_list
+    print(card_list)
+    return card_list
 
 
 def get_types():
     con = create_connection(DATABASE)
     cur = con.cursor()
-    query = "SELECT DISTINCT type FROM cards"
+    query = "SELECT DISTINCT arcana FROM cards"
     records = cur.fetchall()
     print(records)
     for i in range(len(records)):
         records[i] = records[i][0]
     print(records)
     return records
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def render_search():
+    search = request.form['search']
+    title = "Search for " + search
+    query = "SELECT name, number FROM cards WHERE name LIKE ? OR number LIKE ?"
+    search = "%" + search + "%"
+    con = create_connection(DATABASE)
+    cur = con.cursor()
+    cur.execute(query, (search, search))
+    card_list = cur.fetchall()
+    con.close()
+
+    return render_template("cards.html", cards=card_list, title=title, types=get_types())
 
 
 if __name__ == '__main__':
