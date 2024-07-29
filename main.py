@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
 import sqlite3
 from sqlite3 import Error
+
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 DATABASE = "tarot.db"
@@ -74,7 +75,27 @@ def render_search():
     card_list = cur.fetchall()
     con.close()
 
-    return render_template("cards.html", cards=card_list, title=title, types=get_types())
+    return render_template("cards.html", cards=card_list, title=title, types=get_types()
+                          )
+
+
+@app.route('/sort/<title>')
+def render_sortpage(title):
+    sort = request.args.get('sort')
+    order = request.args.get('order', 'asc')
+    new_order = "desc" if order == "asc" else "asc"
+    if sort == "name" and title == "Minor":
+        sort = "suit"
+    query = f'SELECT name, number FROM cards WHERE arcana=? ORDER BY {sort} {order}'
+    con = create_connection(DATABASE)
+    cur = con.cursor()
+    cur.execute(query, (title,))
+    card_list = cur.fetchall()
+    print(card_list)
+    con.close()
+
+    return render_template('cards.html', cards=card_list, title=title,
+                           types=get_types(), order=new_order)
 
 
 if __name__ == '__main__':
