@@ -7,7 +7,7 @@
         <thead>
             <tr>
                 <th><a href="/sort/{{title}}?sort=name&order={{ order }}">Name</a></th>
-                <th><a href="/sort/{{title}}?sort=number&order={{ order }} ">Number</a></th>
+                <th><a href="/sort/{{title}}?sort=number&order={{ order }}">Number</a></th>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +15,7 @@
             <tr>
                 <td>{{ card[0] }}</td>
                 <td>{{ card[1] }}</td>
+                <td>{{ card[2] }}</td>
             </tr>
             {% endfor %}
         </tbody>

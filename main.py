@@ -25,7 +25,7 @@ def render_home():
 @app.route('/cards/<arcana>')
 def render_webpage(arcana):
     title = arcana.title()
-    query = "SELECT name, number FROM cards WHERE arcana=?"
+    query = "SELECT name, number, img FROM cards WHERE arcana=?"
     con = create_connection(DATABASE)
     cur = con.cursor()
 
@@ -39,7 +39,7 @@ def render_webpage(arcana):
 
 def get_cards(arcana):
     title = arcana.upper()
-    query = "SELECT name, number FROM cards WHERE arcana=?"
+    query = "SELECT name, number, img FROM cards WHERE arcana=?"
     con = create_connection(DATABASE)
     cur = con.cursor()
 
@@ -49,6 +49,17 @@ def get_cards(arcana):
     con.close()
     print(card_list)
     return card_list
+
+def get_images():
+    con = create_connection(DATABASE)
+    cur = con.cursor()
+    query = "SELECT name, img FROM cards"
+    cur.execute(query)
+    img_list = cur.fetchall()
+    con.close()
+    print(img_list)
+    return img_list
+    
 
 
 def get_types():
@@ -86,7 +97,7 @@ def render_sortpage(title):
     new_order = "desc" if order == "asc" else "asc"
     if sort == "name" and title == "Minor":
         sort = "suit"
-    query = f'SELECT name, number FROM cards WHERE arcana=? ORDER BY {sort} {order}'
+    query = f'SELECT name, number, img FROM cards WHERE arcana=? ORDER BY {sort} {order}'
     con = create_connection(DATABASE)
     cur = con.cursor()
     cur.execute(query, (title,))
