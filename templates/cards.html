@@ -1,23 +1,24 @@
+
 {% extends "base.html" %}
 
 {% block main %}
     <h2>{{ title }}</h2>
     <p>{{ sort }}</p>
-    <table>
-        <thead>
-            <tr>
-                <th><a href="/sort/{{title}}?sort=name&order={{ order }}">Name</a></th>
-                <th><a href="/sort/{{title}}?sort=number&order={{ order }}">Number</a></th>
-            </tr>
-        </thead>
-        <tbody>
+    <body>
+        <h3>
+            <th><a href="/sort/{{title}}?sort=name&order={{ order }}">Sort by name</a></th>
+            <th><a href="/sort/{{title}}?sort=number&order={{ order }}">Sort by number</a></th>
+        </h3>
+        <div class="card-container">
             {% for card in cards %}
-            <tr>
-                <td>{{ card[0] }}</td>
-                <td>{{ card[1] }}</td>
-                <td>{{ card[2] }}</td>
-            </tr>
+                <div class="box" style="background: url('/static/images/{{ card[2] }}') no-repeat center center; background-size: cover;">
+                    <div class="box-content">
+                        <h4 class="name">{{ card[0] }}</h4>
+                        <p class="paragraph">{{ card[1] }}</p>
+                        <p class="paragraph">{{ card[2] }}</p>
+                    </div>
+                </div>
             {% endfor %}
-        </tbody>
-    </table>
+        </div>
+    </body>
 {% endblock %}

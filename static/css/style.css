@@ -1,0 +1,79 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: #2b34b1;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.box {
+    width: 150px;
+    height: 300px;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 15px;
+    position: relative;
+    color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end; /* Align items to the bottom */
+}
+
+.box-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+
+    align-items: left;
+    text-align: left;
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgb(255, 255, 255, 0.2), rgb(0, 0, 0, 1));
+    z-index: 1;
+}
+
+.name {
+    font-size: 24px;
+    margin: 0;
+}
+.paragraph {
+    font-size: 16px;
+    margin: 10px 0 0;
+}
+
+h3 {
+    z-index: 3;
+}

@@ -78,16 +78,17 @@ def get_types():
 def render_search():
     search = request.form['search']
     title = "Search for " + search
-    query = "SELECT name, number FROM cards WHERE name LIKE ? OR number LIKE ?"
+    query = "SELECT name, number, img FROM cards WHERE name LIKE ? OR number LIKE ?"
     search = "%" + search + "%"
     con = create_connection(DATABASE)
     cur = con.cursor()
     cur.execute(query, (search, search))
     card_list = cur.fetchall()
+    print(card_list)
     con.close()
 
     return render_template("cards.html", cards=card_list, title=title, types=get_types()
-                          )
+                           )
 
 
 @app.route('/sort/<title>')
@@ -110,4 +111,4 @@ def render_sortpage(title):
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=81)
+    app.run(host='0.0.0.0', port=81)
