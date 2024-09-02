@@ -25,7 +25,7 @@ def render_home():
 @app.route('/cards/<arcana>')
 def render_webpage(arcana):
     title = arcana.title()
-    query = "SELECT name, number, img FROM cards WHERE arcana=?"
+    query = "SELECT name, number, img, keywords_0, keywords_1, keywords_2 FROM cards WHERE arcana=?"
     con = create_connection(DATABASE)
     cur = con.cursor()
 
@@ -37,9 +37,23 @@ def render_webpage(arcana):
     return render_template('cards.html', cards=card_list, title=title)
 
 
+@app.route('/fortune/<num_cards>')
+def render_fortunepage(num_cards):
+    query = "SELECT name, fortune_telling_0, img FROM cards ORDER BY RANDOM() LIMIT ?"
+    con = create_connection(DATABASE)
+    cur = con.cursor()
+
+    # query the database
+    cur.execute(query, (num_cards,))
+    card_list = cur.fetchall()
+    con.close()
+    print(card_list)
+    return render_template('fortune.html', cards=card_list)
+
+
 def get_cards(arcana):
     title = arcana.upper()
-    query = "SELECT name, number, img FROM cards WHERE arcana=?"
+    query = "SELECT name, number, img, keywords_0, keywords_1, keywords_2 FROM cards WHERE arcana=?"
     con = create_connection(DATABASE)
     cur = con.cursor()
 
@@ -78,7 +92,7 @@ def get_types():
 def render_search():
     search = request.form['search']
     title = "Search for " + search
-    query = "SELECT name, number, img FROM cards WHERE name LIKE ? OR number LIKE ?"
+    query = "SELECT name, number, img, keywords_0, keywords_1, keywords_2 FROM cards WHERE name LIKE ? OR number LIKE ?"
     search = "%" + search + "%"
     con = create_connection(DATABASE)
     cur = con.cursor()
@@ -98,7 +112,7 @@ def render_sortpage(title):
     new_order = "desc" if order == "asc" else "asc"
     if sort == "name" and title == "Minor":
         sort = "suit"
-    query = f'SELECT name, number, img FROM cards WHERE arcana=? ORDER BY {sort} {order}'
+    query = f'SELECT name, number, img, keywords_0, keywords_1, keywords_2 FROM cards WHERE arcana=? ORDER BY {sort} {order}'
     con = create_connection(DATABASE)
     cur = con.cursor()
     cur.execute(query, (title,))

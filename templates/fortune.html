@@ -2,19 +2,14 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <h2>{{ title }}</h2>
-    <p>{{ sort }}</p>
+    <h2>Your Fortune</h2>
     <body>
-        <h3>
-            <th><a href="/sort/{{title}}?sort=name&order={{ order }}">Sort by name</a></th>
-            <th><a href="/sort/{{title}}?sort=number&order={{ order }}">Sort by number</a></th>
-        </h3>
         <div class="card-container">
             {% for card in cards %}
                 <div class="box" style="background: url('/static/images/{{ card[2] }}') no-repeat center center; background-size: cover;">
                     <div class="box-content">
                         <h4 class="name">{{ card[0] }}</h4>
-                        <p class="paragraph">{{ card[3] }} • {{ card[4] }} • {{ card[5] }}</p>
+                        <p class="paragraph">{{ card[1] }}</p>
                     </div>
                 </div>
             {% endfor %}
